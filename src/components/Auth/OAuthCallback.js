@@ -11,26 +11,37 @@ function OAuthCallback() {
       try {
         const urlParams = new URLSearchParams(location.search);
         const code = urlParams.get('code');
+        const state = urlParams.get('state');
         
-        console.log('Received auth code:', code); // Debug log
+        // Verify state to prevent CSRF attacks
+        const savedState = localStorage.getItem('oauth_state');
+        if (state !== savedState) {
+          throw new Error('Invalid state parameter');
+        }
 
         if (!code) {
           throw new Error('No authorization code received');
         }
 
         const tokens = await getTokens(code);
-        console.log('Received tokens:', { 
-          accessToken: tokens.access_token ? 'Present' : 'Missing',
-          refreshToken: tokens.refresh_token ? 'Present' : 'Missing'
-        }); // Debug log
-
+        
+        // Store tokens
         localStorage.setItem('accessToken', tokens.access_token);
-        localStorage.setItem('refreshToken', tokens.refresh_token);
+        if (tokens.refresh_token) {
+          localStorage.setItem('refreshToken', tokens.refresh_token);
+        }
+        
+        // Clear state
+        localStorage.removeItem('oauth_state');
 
         navigate('/dashboard');
       } catch (error) {
         console.error('OAuth callback error:', error);
-        navigate('/login');
+        navigate('/login', { 
+          state: { 
+            error: 'Authentication failed. Please try again.' 
+          }
+        });
       }
     };
 

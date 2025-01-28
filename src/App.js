@@ -10,7 +10,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/login" element={<Login />} />
-        <Route path="/oauth/callback" element={<OAuthCallback />} />
+        <Route path="/login/oauth/callback" element={<OAuthCallback />} />
         <Route
           path="/dashboard"
           element={

@@ -6,7 +6,7 @@ import '../../App.css'; // Importing the CSS file
 function Login() {
   const handleLogin = () => {
     const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
-    const redirectUri = API_ENDPOINTS.REDIRECT_URI;
+    const redirectUri = encodeURIComponent(API_ENDPOINTS.REDIRECT_URI);
     
     const authUrl = `${API_ENDPOINTS.OAUTH_URL}?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=${SCOPES}&access_type=offline&prompt=consent`;
     
