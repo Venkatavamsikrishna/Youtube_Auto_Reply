@@ -8,7 +8,7 @@ export const API_ENDPOINTS = {
   YOUTUBE_BASE_URL: 'https://youtube.googleapis.com/youtube/v3',
   OAUTH_URL: 'https://accounts.google.com/o/oauth2/v2/auth',
   TOKEN_URL: 'https://oauth2.googleapis.com/token',
-  REDIRECT_URI: process.env.NODE_ENV === 'production' 
+  REDIRECT_URI: process.env.NODE_ENV === 'production'
     ? 'https://youtubeautoreply.vercel.app/login/oauth/callback'
     : 'http://localhost:3000/oauth/callback'
 };
@@ -18,7 +18,7 @@ export const SCOPES = [
   'https://www.googleapis.com/auth/youtube.force-ssl',
   'https://www.googleapis.com/auth/youtube',
   'https://www.googleapis.com/auth/youtube.channel-memberships.creator'
-].join(' ');
+];
 
 export const MAX_RESULTS = {
   VIDEOS: 50,

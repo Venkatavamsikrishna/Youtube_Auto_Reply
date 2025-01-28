@@ -11,6 +11,7 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/login/oauth/callback" element={<OAuthCallback />} />
+        <Route path="/oauth/callback" element={<OAuthCallback />} />
         <Route
           path="/dashboard"
           element={
