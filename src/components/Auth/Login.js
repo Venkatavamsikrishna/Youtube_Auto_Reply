@@ -6,15 +6,20 @@ import '../../App.css'; // Importing the CSS file
 function Login() {
   const handleLogin = () => {
     const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
-    const redirectUri = encodeURIComponent(API_ENDPOINTS.REDIRECT_URI);
     const state = Math.random().toString(36).substring(7);
-    
-    // Save state for CSRF protection
     localStorage.setItem('oauth_state', state);
     
-    const authUrl = `${API_ENDPOINTS.OAUTH_URL}?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=${SCOPES.join(' ')}&access_type=offline&prompt=consent&state=${state}`;
-    
-    window.location.href = authUrl;
+    const params = new URLSearchParams({
+      client_id: clientId,
+      redirect_uri: API_ENDPOINTS.REDIRECT_URI,
+      response_type: 'code',
+      scope: SCOPES,
+      access_type: 'offline',
+      prompt: 'consent',
+      state: state
+    });
+
+    window.location.href = `${API_ENDPOINTS.OAUTH_URL}?${params.toString()}`;
   };
 
   return (
